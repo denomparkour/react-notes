@@ -29,8 +29,6 @@ function Login() {
       });
     } catch (e) {
       setLoggedMessage("Failed to connect to server! Server seems offline.");
-      const doc = document.querySelector(".messager");
-      doc.style.setProperty("display", "block");
     }
 
     const data = await response.json();
@@ -128,7 +126,6 @@ const Button = styled.button`
   }
 `;
 const Messager = styled.div`
-  display: none;
   color: white;
 `;
 const ButtonGroup = styled.div``;
