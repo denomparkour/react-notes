@@ -16,7 +16,6 @@ function Notes() {
       useEffect(() => {
         setViewPort(true);
         setName(location.state.name.name);
-        fetcher();
       });
       useEffect(() => {
         fetcher();
@@ -37,17 +36,20 @@ function Notes() {
     setTemp(temp + 1);
   }
   async function addFunc() {
-    const response = await fetch("http://localhost:3000/api/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        title,
-        description,
-      }),
-    });
+    const response = await fetch(
+      "https://parkour-react-notes-server.herokuapp.com/api/create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          title,
+          description,
+        }),
+      }
+    );
     const data = await response.json();
     if (data.status == "ok") {
       alert(data.msg);
@@ -56,15 +58,18 @@ function Notes() {
     }
   }
   async function fetcher() {
-    const response = await fetch("http://localhost:3000/api/fetch", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-      }),
-    });
+    const response = await fetch(
+      "https://parkour-react-notes-server.herokuapp.com/api/fetch",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+        }),
+      }
+    );
     const data = await response.json();
     setData(data);
   }

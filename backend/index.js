@@ -6,7 +6,8 @@ require("dotenv").config();
 const cors = require("cors");
 const user = require("./model/user");
 const Userdata = require("./model/Userdata");
-const port = process.env.PORT ||3000;
+const port = process.env.PORT || 80;
+const access_token = process.env.ACCESS_TOKEN;
 app.use(express.json());
 app.use(cors());
 var isUser = false;
@@ -24,7 +25,7 @@ app.post("/api/register", async (req, res) => {
     {
       password: req.body.password,
     },
-    process.env.ACCESS_TOKEN
+    access_token
   );
   try {
     await user.create({
@@ -57,9 +58,9 @@ app.post("/api/login", async (req, res) => {
     {
       password: req.body.password,
     },
-    process.env.ACCESS_TOKEN
+    access_token
   );
-  jwt.verify(token, process.env.ACCESS_TOKEN, (err, res) => {
+  jwt.verify(token, access_token, (err, res) => {
     inputPass = res.password;
   });
   const tempVar = await user.findOne({ name: req.body.name });
@@ -68,7 +69,7 @@ app.post("/api/login", async (req, res) => {
   } else {
     passFromDB = tempVar.password;
   }
-  jwt.verify(passFromDB, process.env.ACCESS_TOKEN, (err, res) => {
+  jwt.verify(passFromDB, access_token, (err, res) => {
     if (err) {
       console.log(
         "JWT signature is invalid\nUser Authentication services will no longer work!\nSame signature should be used for both encrypting and decrypting the password!"
@@ -111,16 +112,16 @@ app.post("/api/create", async (req, res) => {
   }
 });
 
-app.post("/api/fetch", async (req,res) => {
-  if(!isUser) {
+app.post("/api/fetch", async (req, res) => {
+  if (!isUser) {
     res
       .status(401)
       .json({ status: "error", msg: "You are not authorized to come here!" });
-  }else {
-    const fetch = await Userdata.find({name: req.body.name})
-    res.status(301).json(fetch)
+  } else {
+    const fetch = await Userdata.find({ name: req.body.name });
+    res.status(301).json(fetch);
   }
-})
+});
 // Listener
 app.listen(port, () => {
   console.log(`server started on ${port}`);

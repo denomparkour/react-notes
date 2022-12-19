@@ -17,16 +17,19 @@ function Login() {
   async function loginUser() {
     var response = "";
     try {
-      response = await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          password,
-        }),
-      });
+      response = await fetch(
+        "https://parkour-react-notes-server.herokuapp.com/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            password,
+          }),
+        }
+      );
     } catch (e) {
       setLoggedMessage("Failed to connect to server! Server seems offline.");
     }

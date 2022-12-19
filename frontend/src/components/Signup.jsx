@@ -8,16 +8,19 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [regMessage, setRegMessage] = useState("");
   async function register() {
-    const response = await fetch("http://localhost:3000/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        password,
-      }),
-    });
+    const response = await fetch(
+      "https://parkour-react-notes-server.herokuapp.com/api/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          password,
+        }),
+      }
+    );
     const data = await response.json();
     setRegMessage(data.msg);
   }
