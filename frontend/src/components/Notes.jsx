@@ -16,10 +16,10 @@ function Notes() {
       useEffect(() => {
         setViewPort(true);
         setName(location.state.name.name);
-      });
+      }, []);
       useEffect(() => {
         fetcher();
-      }, [temp]);
+      }, [temp, name]);
     }
   } catch (err) {
     console.log(err);
